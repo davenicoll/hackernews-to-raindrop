@@ -1,19 +1,23 @@
-# Hacker News upvoted posts saving and syncing
+# Hacker News upvoted posts sync to raindrop.io
 
 Hacker News doesn't have an API, and mobile apps usually implement their own post saving/bookmarking mechanism. Frustrated with the lack of searchability, I decided to sync posts which I upvote to my raindrop.io account.
 
 ## Getting Started
 
-Run get-hn-upvoted.py first.
+Install required dependencies
+```
+pip install -r requirements.txt
+```
+
+Then add your raindrop API token and collection ID to `import-hackernews-to-raindrop.py`
+```
+RAINDROP_API_TOKEN="your-token-goes-here"
+RAINDROP_COLLECTION_ID="your-collection-id-goes-here"
+```
+
+Finally, run import-hackernews-to-raindrop.py
 
 ```
-python3 get-hn-upvoted.py your-username your-password 
+python3 import-hackernews-to-raindrop.py your-username your-password 
 ```
-
-This'll create a file called `hackernews.txt` containing a list of links to posts you've upvoted.
-
-To upload the links to raindrop.io, create an API token, and add it to import-hackernews-to-raindrop.sh. Run it.
-
-```
-./import-hackernews-to-raindrop.sh
-```
+Voila!
