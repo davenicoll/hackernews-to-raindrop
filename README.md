@@ -15,7 +15,7 @@ RAINDROP_API_TOKEN="your-token-goes-here"
 RAINDROP_COLLECTION_ID="your-collection-id-goes-here"
 ```
 
-Finally, run import-hackernews-to-raindrop.py
+Finally, run `import-hackernews-to-raindrop.py`
 
 ```
 python3 import-hackernews-to-raindrop.py your-username your-password 
