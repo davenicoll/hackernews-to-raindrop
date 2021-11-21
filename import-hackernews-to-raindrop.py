@@ -23,6 +23,8 @@ def remove_existing_links():
         print("\033[91mERROR: couldn't remove existing links. Check your raindrop collection id and token are correct\033[00m")
         exit(1)
     else:
+        # empty the trash (collection id -99) to prevent filling it up with old deleted items
+        requests.delete('https://api.raindrop.io/rest/v1/raindrops/-99', headers={'Authorization': "Bearer " + RAINDROP_API_TOKEN } )
         print("OLd links removed")
 
 def add_to_raindrop(title, link, created):
