@@ -1,4 +1,4 @@
-# Hacker News upvoted posts sync to raindrop.io
+# Imports Hacker News upvoted posts to raindrop.io
 
 Hacker News doesn't have an API, and mobile apps usually implement their own post saving/bookmarking mechanism. Frustrated with the lack of searchability, I decided to sync posts which I upvote to my raindrop.io account.
 
