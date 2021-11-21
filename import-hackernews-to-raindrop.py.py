@@ -11,7 +11,7 @@ RAINDROP_COLLECTION_ID=""
 
 if len(sys.argv) - 1 < 2:
     print("\033[91mERROR: Username and password were not specified!\033[00m")
-    print("Usage: python[3] " + sys.argv[0] + " username password [output-file]")
+    print("Usage: python[3] " + sys.argv[0] + " username password")
     exit()
 
 username = sys.argv[1]
