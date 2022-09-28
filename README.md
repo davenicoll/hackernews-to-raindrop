@@ -2,6 +2,8 @@
 
 Hacker News doesn't have an API, and mobile apps usually implement their own post saving/bookmarking mechanism. Frustrated with the lack of searchability, I decided to sync posts which I upvote to my raindrop.io account.
 
+![SCR-20220928-ens](https://user-images.githubusercontent.com/690117/192850583-c6d7d667-575b-46d4-981d-e71277850f37.png)
+
 ## Getting Started
 
 Install required dependencies
