@@ -93,31 +93,31 @@ class raindrop:
             # Avoid 502 bad gateway errors
             time.sleep(5)
 
-    def add(self, hackernews_items):
-        logging.info(str(len(hackernews_items)) + " upvotes to add to raindrop")
-        if len(hackernews_items) > 0:
-            items = []
-            for group in grouper(hackernews_items, 100):
-                for item in group:
-                    if item is not None:
-                        items.append(item.toDict())
+    def add(self, upvotes):
+        logging.info(str(len(upvotes)) + " upvotes to add to raindrop")
+        if len(upvotes) > 0:
+            upvote_list = []
+            for group in grouper(upvotes, 100):
+                for upvote in group:
+                    if upvote is not None:
+                        upvote_list.append(upvote.toDict())
 
-            items = {"items": items}
+            upvote_list = {"items": upvote_list}
 
-            logging.debug(items)
+            logging.debug(upvote_list)
 
             logging.debug("POST https://api.raindrop.io/rest/v1/raindrops")
             response = requests.post(
                 "https://api.raindrop.io/rest/v1/raindrops",
                 headers={"Authorization": "Bearer " + RAINDROP_API_TOKEN},
-                json=items,
+                json=upvote_list,
             )
 
             if response.status_code == 200:
                 logging.debug("Success")
             else:
                 logging.error(
-                    "Couldn't post multiple items to raindrop ("
+                    "Couldn't post multiple upvotes to raindrop ("
                     + str(response.status_code)
                     + ": "
                     + response.reason
@@ -144,37 +144,33 @@ class raindrop:
             exit(1)
 
 
+class upvote:
+    def __init__(self, title, link, date):
+        self.title = title
+        self.link = link
+        self.created = date
+        self.lastUpdate = date
+
+    def toDict(self):
+        return {
+            "title": self.title,
+            "excerpt": "",
+            "tags": ["hackernews", "imported"],
+            "link": self.link,
+            "created": self.created,
+            "lastUpdate": self.lastUpdate,
+            "collection": {
+                "$ref": "collections",
+                "$id": RAINDROP_COLLECTION_ID,
+                "oid": "-1",
+            },
+        }
+
+
 class hackernews:
     def __init__(self):
         self._items = []
         self.get_upvotes()
-
-    class _item:
-        def __init__(self, title, link, date):
-            self.title = title
-            self.link = link
-            self.created = date
-            self.lastUpdate = date
-
-        def toDict(self):
-            return {
-                "title": self.title,
-                "excerpt": "",
-                "tags": ["hackernews", "imported"],
-                "link": self.link,
-                "created": self.created,
-                "lastUpdate": self.lastUpdate,
-                "collection": {
-                    "$ref": "collections",
-                    "$id": RAINDROP_COLLECTION_ID,
-                    "oid": "-1",
-                },
-            }
-
-        # def toJSON(self):
-        #     return str(
-        #         json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
-        #     )
 
     def _request_and_process(self, session, url):
         logging.debug("Hackernews - get " + url)
@@ -190,7 +186,7 @@ class hackernews:
         for item in items:
             if item[1].startswith("item?id=") is False:
                 if rd.url_exists(item[1]) is False:
-                    self._items.append(self._item(item[0], item[1], item[2]))
+                    self._items.append(upvote(item[0], item[1], item[2]))
 
         morelink = tree.xpath('string(//a[@class="morelink"]/@href)')
         return morelink
