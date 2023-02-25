@@ -20,6 +20,6 @@ RAINDROP_COLLECTION_ID="your-collection-id-goes-here"
 Finally, run `import-hackernews-to-raindrop.py`
 
 ```
-python3 import-hackernews-to-raindrop.py your-username your-password 
+python3 import-hackernews-to-raindrop.py your-hackernews-username your-hackernews-password 
 ```
 Voila!
